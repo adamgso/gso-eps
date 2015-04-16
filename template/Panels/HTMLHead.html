@@ -1,0 +1,93 @@
+%%Panel.DOCTYPE%%
+<html lang="en">
+<head>
+    <meta charset="%%GLOBAL_CharacterSet%%">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="%%Page.MetaDescription%%"/>
+    <meta name="keywords" content="%%Page.MetaKeywords%%"/>
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="%%GLOBAL_Favicon%%"/>
+
+    <!--[if lt IE 9]>
+    <!--<script src="/concrete/js/ie/html5-shiv.js"></script>-->
+    <!--<script src="/concrete/js/ie/respond.js"></script>-->
+    <![endif]-->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>%%Page.WindowTitle%%</title>
+
+    %%GLOBAL_AdditionalMetaTags%%
+    %%Page.CanonicalLink%%
+    %%Page.Robots%%
+    %%GLOBAL_HeadFonts%%
+
+    <script>
+        //<![CDATA[
+        (function () {
+            // this happens before external dependencies (and dom ready) to reduce page flicker
+            var node, i;
+            for (i = window.document.childNodes.length; i--;) {
+                node = window.document.childNodes[i];
+                if (node.nodeName == 'HTML') {
+                    node.className += ' javascript';
+                }
+            }
+        })();
+        //]]>
+    </script>
+
+    %%GLOBAL_Stylesheets%%
+    <!-- Tell the browsers about our RSS feeds -->
+    %%GLOBAL_HeadRSSLinks%%
+
+    <!-- Include visitor tracking code (if any) -->
+    %%GLOBAL_TrackingCode%%
+    %%GLOBAL_DesignModeStyleSheet%%
+    %%GLOBAL_HeaderImageStyle%%
+
+    <link href="%%GLOBAL_TPL_PATH%%/Styles/font-awesome.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/packages/studio_testimonials_pro/blocks/studio_testimonials_pro/view.css" rel="stylesheet"
+          type="text/css" media="all">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="%%GLOBAL_CdnAppPath%%/javascript/menudrop.js?%%GLOBAL_JSCacheToken%%"></script>
+    <script src="%%GLOBAL_CdnAppPath%%/javascript/iselector.js?%%GLOBAL_JSCacheToken%%"></script>
+    <script src="%%GLOBAL_CdnAppPath%%/javascript/jquery/plugins/jquery.flexslider.js"></script>
+    <script src="%%GLOBAL_CdnAppPath%%/javascript/viewport.js?%%GLOBAL_JSCacheToken%%"></script>
+
+    <!-- Theme bespoke js -->
+    <script src="%%GLOBAL_TPL_PATH%%/js/matchMedia.js"></script>
+    <script src="%%GLOBAL_TPL_PATH%%/js/common.js"></script>
+    <script src="%%GLOBAL_TPL_PATH%%/js/jquery.autobox.js"></script>
+    <script src="%%GLOBAL_TPL_PATH%%/js/init.js"></script>
+    <script src="%%GLOBAL_TPL_PATH%%/js/jquery.uniform.min.js"></script>
+    <script src="%%GLOBAL_TPL_PATH%%/js/main.js?%%GLOBAL_JSCacheToken%%"></script>
+    <script src="%%GLOBAL_TPL_PATH%%/js/quicksearch.js"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="%%GLOBAL_TPL_PATH%%/Styles/bootstrap.css" rel="stylesheet">
+    <link href="%%GLOBAL_TPL_PATH%%/Styles/main.css" rel="stylesheet" type="text/css"
+          media="all">
+
+    <script>
+        //<![CDATA[
+        config.ShopPath = '%%GLOBAL_ShopPath%%';
+        config.AppPath = ''; // BIG-8939: Deprecated, do not use.
+        config.FastCart = %%GLOBAL_FastCart%%;
+        config.ShowCookieWarning = !! %%GLOBAL_ShowCookieWarningMessage%%;
+        var ThumbImageWidth = %%GLOBAL_ProductThumbImageWidth%%;
+        var ThumbImageHeight = %%GLOBAL_ProductThumbImageHeight%%;
+        //]]>
+    </script>
+    %%GLOBAL_AdditionalScriptTags%%
+    %%GLOBAL_RTLStyles%%
+
+    <!--[if lt IE 9]>
+    <script src="%%GLOBAL_TPL_PATH%%/js/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
