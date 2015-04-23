@@ -218,9 +218,6 @@ $(document).ready(function() {
     $('.FormFieldLabel').each(function() {
         $(this).text($(this).text().replace(/:/g,""));
     });
-
-    ShowUSatTop();
-    $('div.ExpressCheckoutContent').change(ShowUSatTop);
 });
 
 function ToggleShippingEstimation2(){
@@ -247,17 +244,3 @@ function ToggleShippingEstimation2(){
         });
     }
 };
-
-
-function ShowUSatTop() {
-    $('option[value="United States"]').each(function(){
-        var countries = $(this).closest('select');
-        var usaSelected = $(this).is('[selected]');
-        $(this).remove();
-        if (usaSelected) {
-            countries.find('option[value=""]').after('<option value="United States" selected="selected">United States</option>');
-        } else {
-            countries.find('option[value=""]').after('<option value="United States">United States</option>');
-        }
-    });
-}
