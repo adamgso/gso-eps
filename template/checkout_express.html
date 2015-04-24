@@ -200,7 +200,6 @@
                 $.uniform.restore('select.JSHidden');
             });
 
-            $('input#FormField_2').focus(function(){alert('in'); $('div.PasswordRequirements').hide();}).blur(function(){alert('out'); $('div.PasswordRequirements').show();});
         });
         $(document).ajaxComplete(function(event,request, settings) {
             $('select').not('.UniApplied').uniform();

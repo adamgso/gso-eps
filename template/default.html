@@ -1,24 +1,1229 @@
 %%Panel.HTMLHead%%
-<body id="home">
-<div class="<?php echo $c->getPageWrapperClass() ?>">
-    <div class="page" id="page">
-        %%Panel.epNavBar%%
-        %%Panel.Header%%
-        <div class="main container marketing">
-            %%Panel.BannerImage01%%
-            <div class="inner">
-                %%Panel.WrapperBanner%%
-                <div class="Content Widest" id="LayoutColumn1">
-                    %%Banner.TopBanner%%
-                    %%Discount.FreeShippingEligibility%%
-                    %%Panel.HomeFeaturedProducts%%
-                    %%Panel.SideTopSellers%%
-                    %%Panel.HomeNewProducts%%
-                    %%Banner.BottomBanner%%
+<body class="productPage">
+<script type="text/javascript"
+        src="https://cdn6.bigcommerce.com/r-1f83c996e2195ae705573eb2731da267d5f444ce/javascript/jquery/plugins/validate/jquery.validate.js?"></script>
+<script type="text/javascript" src="/template/js/product.functions.js?"></script>
+<script type="text/javascript"
+        src="https://cdn6.bigcommerce.com/r-1f83c996e2195ae705573eb2731da267d5f444ce/javascript/product.js?"></script>
+
+<div id="DrawerMenu">
+    <div class="inner">
+        <div class="CategoryList" id="SideCategoryList">
+            <h3>Categories</h3>
+
+            <div class="BlockContent">
+                <div class="SideCategoryListFlyout">
+                    <ul class="sf-menu sf-horizontal sf-js-enabled">
+                        <li><a href="http://store.emotionalpitch.com/emotional-pitch/">Emotional Pitch</a></li>
+
+                    </ul>
+
                 </div>
             </div>
         </div>
-        %%Panel.Footer%%
+        <div class="Block Moveable Panel" id="SideShopByBrand" style="display:none;"></div>
+        <div class="Block Moveable Panel" id="SideCategoryShopByPrice" style="display:none;"></div>
+        <div class="AdditionalInformationList Moveable Panel slist" id="SideAdditionalInformation">
+            <h3>Additional Information</h3>
+
+            <div class="BlockContent">
+                <ul class="treeview">
+                    <li><a href="/">Home</a></li>
+                </ul>
+                <ul class="pages-menu sf-menu sf-horizontal sf-js-enabled">
+                    <li class=" ">
+                        <a href="http://store.emotionalpitch.com/contact-us/"><span>Contact Us</span></a>
+
+                    </li>
+                    <li class=" ">
+                        <a href="http://store.emotionalpitch.com/shipping-returns/"><span>Shipping &amp; Returns</span></a>
+
+                    </li>
+                    <li class=" ">
+                        <a href="http://store.emotionalpitch.com/blog/"><span>Blog</span></a>
+
+                    </li>
+                    <li class=" ">
+                        <a href="http://store.emotionalpitch.com/rss-syndication/"><span>RSS Syndication</span></a>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="AccountNavigationList Moveable Panel slist" id="SideAccountNavigation">
+            <h3>Site Information</h3>
+
+            <div class="BlockContent js-side-account-menu">
+                <!-- Fill with content from TopMenu -->
+            </div>
+        </div>
+        <script>
+
+            (function ($, window) {
+                'use strict';
+
+                var bcTheme = window.bcTheme || {};
+                bcTheme.mobile = bcTheme.mobile || {};
+
+                var MobileAccountMenu = function MobileAccountMenu() {
+                };
+
+                MobileAccountMenu.prototype.init = function init(selector) {
+                    this.$element = $(selector);
+
+                    this.cloneTopMenu();
+                    this.setCurrencyConvertor();
+                    this.bindEvents();
+
+                };
+
+                MobileAccountMenu.prototype.cloneTopMenu = function cloneTopMenu() {
+                    // Cloning from top menu as Globals don't work down here.
+                    var $topMenuClone = $('.TopMenu ul').clone(),
+                            $phoneNumber = $('<a />', {
+                                'text': $('.js-drawermenu-store-phone-container').find('.phoneIcon').text(),
+                                'href': 'tel:' + $('.js-drawermenu-store-phone-container').find('.js-drawermenu-store-phone').text()
+                            });
+                    //Modify the cloned menu to make phone clickable and hide stuff we don't need
+                    $topMenuClone.find('.phoneIcon').replaceWith($phoneNumber);
+                    $topMenuClone.find('.js-drawermenu-cart').remove();
+                    //append new menu to drawer
+                    this.$element.append($topMenuClone);
+                };
+
+                MobileAccountMenu.prototype.setCurrencyConvertor = function setCurrencyConvertor() {
+                    this.$mobileCurrencyConverter = this.$element.find('.js-drawermenu-currency-converter');
+                    this.$mobileSelectedCurrency = this.$mobileCurrencyConverter.find('.selected-currency');
+                    this.$mobileCurrencyList = this.$mobileCurrencyConverter.find('.CurrencyList');
+                };
+
+                MobileAccountMenu.prototype.bindEvents = function bindEvents() {
+                    var that = this;
+
+                    this.$mobileSelectedCurrency.on('click', function (e) {
+                        e.preventDefault();
+                        that.$mobileSelectedCurrency.toggleClass('open');
+                        that.$mobileCurrencyList.toggleClass('open');
+                    });
+                };
+
+                bcTheme.mobile.accountMenu = new MobileAccountMenu();
+
+                window.bcTheme = window.bcTheme || bcTheme;
+
+            }(jQuery, window));
+
+            $(function () {
+                bcTheme.mobile.accountMenu.init('.js-side-account-menu');
+            });
+
+        </script>
+
     </div>
-</body>
-</html>
+</div>
+<script>
+    //<![CDATA[
+    $(function () {
+
+        //Drawer Subnavigation Accordion
+        $('#DrawerMenu li ul').addClass('drawer-subcat');
+        $('#DrawerMenu .drawer-subcat').prev('a').after('<span class="subcat-expand"></span>');
+        $('#DrawerMenu .subcat-expand').click(function () {
+            $(this).next('.drawer-subcat').toggleClass('expanded');
+            $(this).toggleClass('subcat-expanded');
+        });
+
+    });
+    //]]>
+</script>
+
+
+<div class="page" id="page">
+    <div class="navbar-wrapper">
+        <div class="container">
+            <nav class="navbar navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="http://www.emotionalpitch.com/"><img
+                                src="/template/images/emotional-pitch-logo-blue.jpg"></a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <!-- use <ul class="nav navbar-nav navbar-right"> -->
+                        <ul class="nav navbar-nav navbar-right store-nav" style="display:">
+                            <li class="last CartLink js-drawermenu-cart" style="display:">
+                                <i class="icon" title="View Cart">&nbsp;</i><a
+                                    href="http://store.emotionalpitch.com/cart.php" title="View Cart"><span></span></a>
+                            </li>
+                            <li style="display:">
+                                <div></div>
+                            </li>
+
+                            <li style="display:" class="First">
+                                <a href="https://store.emotionalpitch.com/account.php">My Account</a>
+                                <ul>
+                                    <li>
+                                        <a href="https://store.emotionalpitch.com/login.php?action=logout">Log Out</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="/emotional-pitch-1/">Product</a>
+                            </li>
+                            <li style="display:none" class="HeaderLiveChat">
+
+                            </li>
+                            <!--
+                                        <li class="js-drawermenu-currency-converter">
+                                            <div class="currency-converter">
+                                                <p>All prices are in <span title='US Dollar'>USD</span></p>
+                                                <div class="Block Moveable Panel" id="SideCurrencySelector" style="display:none;"></div>
+                                            </div>
+                                        </li>
+                            -->
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="header">
+        <div class="inner">
+
+            <div id="AjaxLoading">
+                <div class="ajax-loader">
+                    <img src="https://cdn6.bigcommerce.com/s-xcmumu/templates/__custom/images/loader.png?t=1429742797"
+                         alt="">&nbsp;Loading... Please wait...
+                </div>
+            </div>
+
+
+            <div id="Header">
+                <div class="inner">
+                    <div id="cart-amount">
+                        <a href="http://store.emotionalpitch.com/cart.php" class="Cart"><span class="bag-handle"></span><span
+                                class="total"></span></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="main container marketing">
+        <div class="inner">
+
+            <div class="Block Moveable Panel Breadcrumb" id="ProductBreadcrumb">
+                <ul class="last">
+                    <li><a href="https://store.emotionalpitch.com">Home</a></li>
+                    <li><a href="http://store.emotionalpitch.com/emotional-pitch/">Emotional Pitch</a></li>
+                    <li>Emotional Pitch®</li>
+                </ul>
+
+            </div>
+
+            <link rel="stylesheet" type="text/css"
+                  href="https://cdn6.bigcommerce.com/r-1f83c996e2195ae705573eb2731da267d5f444ce/javascript/jquery/themes/cupertino/ui.all.css?">
+            <link rel="stylesheet" type="text/css" media="screen"
+                  href="https://cdn5.bigcommerce.com/s-xcmumu/templates/__custom/Styles/product.attributes.css?t=1429742797?">
+            <script type="text/javascript"
+                    src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
+            <script type="text/javascript"
+                    src="https://cdn6.bigcommerce.com/r-1f83c996e2195ae705573eb2731da267d5f444ce/javascript/jquery/plugins/jquery.form.js?"></script>
+            <script type="text/javascript"
+                    src="https://cdn6.bigcommerce.com/r-1f83c996e2195ae705573eb2731da267d5f444ce/javascript/product.attributes.js?"></script>
+            <script type="text/javascript"
+                    src="https://cdn6.bigcommerce.com/r-1f83c996e2195ae705573eb2731da267d5f444ce/javascript/jquery/plugins/jCarousel/jCarousel.js?"></script>
+            <link rel="stylesheet" type="text/css" href="/template/js/cloudzoom/cloudzoom.css?">
+            <script type="text/javascript" src="/template/js/cloudzoom/cloudzoom.js?"></script>
+            <script type="text/javascript">//<![CDATA[
+            var ZoomImageURLs = new Array();
+
+            ZoomImageURLs[0] = "https:\/\/cdn6.bigcommerce.com\/s-xcmumu\/products\/76\/images\/264\/emotional_pitch_book_cd__01063.1427929186.1280.1280.jpg?c=2";
+
+            //]]></script>
+
+            <script type="text/javascript">//<![CDATA[
+            var ThumbURLs = new Array();
+            var ProductImageDescriptions = new Array();
+            var CurrentProdThumbImage = 0;
+            var ShowVariationThumb = false;
+            var ProductThumbWidth = 500;
+            var ProductThumbHeight = 659;
+            var ProductMaxZoomWidth = 1280;
+            var ProductMaxZoomHeight = 1280;
+            var ProductTinyWidth = 40;
+            var ProductTinyHeight = 53;
+
+
+            ThumbURLs[0] = "https:\/\/cdn6.bigcommerce.com\/s-xcmumu\/products\/76\/images\/264\/emotional_pitch_book_cd__01063.1427929186.500.659.jpg?c=2";
+            ProductImageDescriptions[0] = "Emotional Pitch... the revolutionary new way to learn music";
+
+
+            //Don't enable Cloud Zoom (product image zoom) on touch device
+            //Mouseenter/Mouseover events are not ideal for touch devices
+            //for more info search for this code in /script/main.js
+            if (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0)) {
+                var ShowImageZoomer = false;
+            } else {
+                var ShowImageZoomer = 1;
+            }
+
+            var productId = 76;
+            //]]></script>
+
+            <div class="Block Moveable Panel PrimaryProductDetails no-ptop" id="ProductDetails" itemscope=""
+                 itemtype="http://schema.org/Product">
+                <div class="BlockContent">
+
+                    <!-- left-content -->
+                    <div class="left-content">
+                        <div class="ProductThumb" style="width: 520px; height: 749px;">
+                            <script type="text/javascript"
+                                    src="https://cdn6.bigcommerce.com/r-1f83c996e2195ae705573eb2731da267d5f444ce/javascript/jquery/plugins/fancybox/fancybox.js?"></script>
+
+                            <link rel="stylesheet" type="text/css"
+                                  href="https://cdn6.bigcommerce.com/r-1f83c996e2195ae705573eb2731da267d5f444ce/javascript/jquery/plugins/fancybox/fancybox.css"
+                                  media="screen">
+
+                            <div id="LightBoxImages" style="display: none;"><!--  -->
+                                <a class="iframe"
+                                   href="https://store.emotionalpitch.com/productimage.php?product_id=76"></a>
+                            </div>
+
+                            <script type="text/javascript">
+                                //<![CDATA[
+                                var originalImages = '';
+                                function showProductImageLightBox(TargetedImage) {
+                                    var currentImage = 0;
+                                    if (TargetedImage) {
+                                        currentImage = TargetedImage;
+                                    } else if (CurrentProdThumbImage != 'undefined') {
+                                        currentImage = CurrentProdThumbImage;
+                                    }
+                                    if (ShowVariationThumb) {
+                                        var url = "https://store.emotionalpitch.com/productimage.php?product_id=76&image_rule_id=" + encodeURIComponent(ShowVariationThumb);
+                                    } else {
+                                        var url = "https://store.emotionalpitch.com/productimage.php?product_id=76&current_image=" + currentImage;
+                                    }
+                                    $('#LightBoxImages a').attr("href", url);
+
+                                    initProductLightBox();
+
+                                    $('#LightBoxImages a').trigger('click');
+                                }
+
+                                function initProductLightBox() {
+
+                                    var w = $(window).width();
+                                    var h = $(window).height();
+
+                                    // tiny image box width plus 3 px margin, times the number of tiny images, plus the arrows width
+                                    var carouselWidth = (44 + 3)*Math.min(10, 2) + 70;
+
+                                    //the width of the prev and next link
+                                    var navLinkWidth = 250;
+
+                                    var requiredNavWidth = Math.max(carouselWidth, navLinkWidth);
+
+                                    // calculate the width of the widest image after resized to fit the screen.
+                                    // 200 is the space betewn the window frame and the light box frame.
+                                    var wr = Math.min(w - 200, 1280)/1280;
+                                    var hr = Math.min(h - 200, 1280)/1280;
+
+                                    var r = Math.min(wr, hr);
+
+                                    var imgResizedWidth = Math.round(r*1280);
+                                    var imgResizedHeight = Math.round(r*1280);
+
+                                    //calculate the width required for lightbox window
+                                    var horizontalPadding = 100;
+                                    var width = Math.min(w - 100, Math.max(requiredNavWidth, imgResizedWidth + horizontalPadding));
+
+                                    //Assume mobile devices have resolution of less than 1000 pixels. If this is a mobile device, don't include bottom padding
+                                    var height = h - (w < 1000 ? 0 : 100 );
+
+                                    $('#LightBoxImages a').fancybox({
+                                        'frameWidth': width,
+                                        'frameHeight': height,
+                                        callbackOnStart: function () {
+                                            $('.zoomPad').css('z-index', 0);
+                                        },
+                                        callbackOnClose: function () {
+                                            $('.zoomPad').css('z-index', 90);
+                                        }
+                                    });
+                                }
+
+                                $(document).ready(function () {
+                                    originalImages = $('#LightBoxImages').html();
+                                });
+                                //]]>
+                            </script>
+
+                            <div class="ProductThumbImage">
+                                <a rel="prodImage" style="margin:auto;"
+                                   onclick="showProductImageLightBox(); return false; return false;">
+                                    <img itemprop="image" class="cloudzoom"
+                                         src="https://cdn6.bigcommerce.com/s-xcmumu/products/76/images/264/emotional_pitch_book_cd__01063.1427929186.500.659.jpg?c=2"
+                                         alt="Emotional Pitch... the revolutionary new way to learn music"
+                                         title="Emotional Pitch... the revolutionary new way to learn music">
+                                </a>
+                            </div>
+
+                            <div class="ImageCarouselBox" style="padding-left: 203px;">
+                                <a style="display: none;" id="ImageScrollPrev" class="prev" href="#"><img
+                                        src="https://cdn6.bigcommerce.com/s-xcmumu/templates/__custom/images/LeftArrow.png?t=1429742797"
+                                        alt="" height="20" width="20"></a>
+
+                                <div style="visibility: visible; overflow: hidden; position: relative; z-index: 2; left: 0px; width: 50px;"
+                                     class="ProductTinyImageList">
+                                    <ul style="margin: 0px; padding: 0px; position: relative; list-style-type: none; z-index: 1; width: 50px; left: 0px;">
+                                        <li style="overflow: hidden; float: left; width: 40px; height: 53px;"
+                                            onclick="showProductImageLightBox(0); return false;"
+                                            onmouseover="showProductThumbImage(0, this)" id="TinyImageBox_0">
+                                            <div class="TinyOuterDiv"
+                                                 style="height: 53px; width: 40px; border: 1px solid rgb(0, 0, 0);">
+                                                <a href="javascript:void(0);"
+                                                   rel="{&quot;gallery&quot;: &quot;prodImage&quot;, &quot;smallimage&quot;: &quot;https://cdn6.bigcommerce.com/s-xcmumu/products/76/images/264/emotional_pitch_book_cd__01063.1427929186.500.659.jpg?c=2&quot;, &quot;largeimage&quot;: &quot;https://cdn6.bigcommerce.com/s-xcmumu/products/76/images/264/emotional_pitch_book_cd__01063.1427929186.1280.1280.jpg?c=2&quot;}"
+                                                   style="height:53px; width:40px">
+                                                    <img id="TinyImage_0"
+                                                         src="https://cdn6.bigcommerce.com/s-xcmumu/products/76/images/264/emotional_pitch_book_cd__01063.1427929186.40.53.jpg?c=2"
+                                                         alt="Emotional Pitch... the revolutionary new way to learn music"
+                                                         title="Emotional Pitch... the revolutionary new way to learn music"
+                                                         height="53" width="40">
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <a id="ImageScrollNext" class="next" href="#"><img
+                                        src="https://cdn6.bigcommerce.com/s-xcmumu/templates/__custom/images/RightArrow.png?t=1429742797"
+                                        alt="" height="20" width="20"></a>
+                            </div>
+                            <div style="display:none;" class="SeeMorePicturesLink">
+                                <a href="#" onclick="showProductImageLightBox(); return false; return false;"
+                                   class="ViewLarger">Click to enlarge</a>
+                            </div>
+                        </div>
+
+                        <div class="PinterestButtonContainer">
+                            <a data-pin-log="button_pinit"
+                               data-pin-href="//www.pinterest.com/pin/create/button/?guid=8yvRXskromWc-1&amp;url=https%3A%2F%2Fstore.emotionalpitch.com%2Femotional-pitch-1%2F&amp;media=https%3A%2F%2Fcdn6.bigcommerce.com%2Fs-xcmumu%2Fproducts%2F76%2Fimages%2F264%2Femotional_pitch_book_cd__01063.1427929186.1280.1280.jpg&amp;description=Emotional%20Pitch%C2%AE%20-%20Emotional%20Pitch"
+                               class="PIN_1429743274179_pin_it_button_20 PIN_1429743274179_pin_it_button_en_20_gray PIN_1429743274179_pin_it_button_inline_20 PIN_1429743274179_pin_it_none"><span
+                                    id="PIN_1429743274179_pin_count_0"
+                                    class="PIN_1429743274179_hidden"><i></i></span></a>
+                        </div>
+
+                    </div>
+                    <!-- Product Details Content -->
+                    <div class="ProductMain">
+                        <div class="ProductDetailsGrid">
+                            <div class="DetailRow">
+                                <div class="Value" itemprop="brand" itemscope="" itemtype="http://schema.org/Brand"
+                                     style="display: none">
+                                    <h4 class="BrandName"><a itemprop="url" href=""><span itemprop="name"></span></a>
+                                    </h4>
+                                </div>
+
+                                <h1 itemprop="name">Emotional Pitch®</h1>
+
+                            </div>
+                            <div class="DetailRow" style="display: none" itemprop="aggregateRating" itemscope=""
+                                 itemtype="http://schema.org/AggregateRating">
+                                <div class="Value">
+                        <span>
+                            <meta itemprop="ratingValue" content="0">
+                            <img src="https://cdn6.bigcommerce.com/s-xcmumu/templates/__custom/images/IcoRating0.png?t=1429742797"
+                                 alt="0 Stars">
+                            <span style="display:none">
+                                <a href="#reviews" onclick="">
+
+                                </a>
+                            </span>
+                        </span>
+                                </div>
+                            </div>
+                            <div class="DetailRow PriceRow p-price" itemprop="offers" itemscope=""
+                                 itemtype="http://schema.org/Offer" style="">
+                                <div class="Value">
+                                    <span class="ProductPrice RetailPrice"></span>
+                                    <meta itemprop="priceCurrency" content="USD">
+                                    <span class="ProductPrice VariationProductPrice" itemprop="price">$199.00</span>
+                                </div>
+                            </div>
+                            <div class="s-price">
+
+                            </div>
+                        </div>
+
+
+                        <div class="clear"></div>
+
+                        <div class="Block Moveable Panel" id="ProductTabs" style="display:none;"></div>
+
+                        <div class="productAddToCartRight">
+                            <form method="post" action="https://store.emotionalpitch.com/cart.php"
+                                  onsubmit="return check_add_to_cart(this, false) " enctype="multipart/form-data"
+                                  id="productDetailsAddToCartForm">
+                                <input name="action" value="add" type="hidden">
+                                <input name="product_id" value="76" type="hidden">
+                                <input name="variation_id" class="CartVariationId" value="" type="hidden">
+                                <input name="currency_id" value="" type="hidden">
+
+                                <div class="ProductDetailsGrid ProductAddToCart">
+
+                                    <!-- details grid -->
+
+                                    <div class="DetailRow ProductSKU" style="display: ">
+                                        <div class="Label">SKU:</div>
+                                        <div class="Value">
+				<span class="VariationProductSKU" itemprop="sku">
+					ISBN 978-0-692-31170-7
+				</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="DetailRow" style="display: none">
+                                        <div class="Label">Condition:</div>
+                                        <div class="Value" itemprop="itemCondition">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="DetailRow" style="display: none">
+                                        <div class="Label">Weight:</div>
+                                        <div class="Value">
+				<span class="VariationProductWeight" itemprop="weight">
+
+				</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="DetailRow" style="display: none">
+                                        <div class="Label">Availability:</div>
+                                        <div class="Value">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="DetailRow" style="display: none">
+                                        <div class="Label">Shipping:</div>
+                                        <div class="Value">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="DetailRow" style="display:none;">
+                                        <div class="Label">Minimum Purchase:</div>
+                                        <div class="Value">
+                                            unit(s)
+                                        </div>
+                                    </div>
+
+                                    <div class="DetailRow" style="display:none;">
+                                        <div class="Label">Maximum Purchase:</div>
+                                        <div class="Value">
+                                            unit(s)
+                                        </div>
+                                    </div>
+
+                                    <div class="DetailRow InventoryLevel" style="display: none;">
+                                        <div class="Label">:</div>
+                                        <div class="Value">
+				<span class="VariationProductInventory">
+
+				</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="DetailRow" style="display: none">
+                                        <div class="Label">Gift Wrapping:</div>
+                                        <div class="Value">
+
+                                        </div>
+                                    </div>
+
+                                    <!-- details grid -->
+
+
+                                    <div class="ProductOptionList">
+
+                                    </div>
+
+                                    <div class="productAttributeList" style="display:none;">
+
+                                    </div>
+
+
+                                    <div class="DetailRow qty" style="display: ">
+                                        <div class="Label QuantityInput">Quantity:</div>
+                                        <div class="Value AddCartButton">
+<select id="qty_"
+                                                                                                    name="qty[]"
+                                                                                                    class="quantityInput"
+                                                                                                    style="">
+
+                                                <option selected="selected" value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                                <option value="13">13</option>
+                                                <option value="14">14</option>
+                                                <option value="15">15</option>
+                                                <option value="16">16</option>
+                                                <option value="17">17</option>
+                                                <option value="18">18</option>
+                                                <option value="19">19</option>
+                                                <option value="20">20</option>
+                                                <option value="21">21</option>
+                                                <option value="22">22</option>
+                                                <option value="23">23</option>
+                                                <option value="24">24</option>
+                                                <option value="25">25</option>
+                                                <option value="26">26</option>
+                                                <option value="27">27</option>
+                                                <option value="28">28</option>
+                                                <option value="29">29</option>
+                                                <option value="30">30</option>
+
+                                            </select></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="OutOfStockMessage InfoMessage" style="display: none;">
+
+                                    </div>
+
+                                    <div class="addto">
+                                        <div class="InfoMessage" style="display: none;">
+                                            <a href="#"
+                                               onclick="$.iModal({data: $('#ProductDetailsBulkDiscountThickBox').html(), width: 600}); return false;">
+                                                Buy in bulk and save
+                                            </a>
+                                        </div>
+
+                                        <div class="BulkDiscount DetailRow" style="display: ">
+                                            <input class="btn add-to-cart AddCartButton" value="Add To Cart"
+                                                   type="submit">
+                                        </div>
+
+                                        <!-- Add to Wishlist -->
+                                        <div style="display:none" id="SideProductAddToWishList"
+                                             class="Block Moveable Panel AddToWishlistLink">
+                                            <input value="Add to Wish List" class="btn alt wishTrigger"
+                                                   title="Add to Wish List" type="button">none
+                                        </div>
+
+                                        <!-- //Custom Add to Wishlist -->
+                                    </div>
+                                    <!-- addto -->
+                                </div>
+                            </form>
+
+                            <!-- Add to Wishlist -->
+
+                            <div class="Block Moveable Panel AddToWishlistLink" id="SideProductAddToWishList"
+                                 style="display: none">
+                                <div class="BlockContent">
+                                    <form name="frmWishList" id="frmWishList"
+                                          action="https://store.emotionalpitch.com/wishlist.php" method="get">
+                                        <input name="action" value="add" type="hidden">
+                                        <input name="product_id" value="76" type="hidden">
+                                        <input name="variation_id" value="" class="WishListVariationId" type="hidden">
+                                        <input class="wishlist-button" value="Add to Wish List" alt="Add to Wish List"
+                                               type="submit">
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- //Custom Add to Wishlist -->
+
+
+                            <script language="javascript" type="text/javascript">//<![CDATA[
+                            lang.OptionMessage = "";
+                            lang.VariationSoldOutMessage = "The selected product combination is currently unavailable.";
+                            lang.InvalidQuantity = "Please enter a valid product quantity.";
+                            lang.EnterRequiredField = "Please enter the required field(s).";
+                            lang.InvalidFileTypeJS = "The file type of the file you are trying to upload is not allowed for this field.";
+                            var ShowAddToCartQtyBox = "1";
+                            productMinQty = 0;
+                            productMaxQty = Number.POSITIVE_INFINITY;
+                            //]]></script>
+
+                        </div>
+
+
+                        <div class="clear"></div>
+                        <div class="Clear AddThisButtonBox">
+                            <!-- AddThis Button BEGIN -->
+                            <div class="addthis_toolbox addthis_default_style ">
+                                <a class="addthis_button_google_plusone at300b" g:plusone:count="false">
+                                    <div id="___plusone_0"
+                                         style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 24px; height: 15px;">
+                                        <iframe title="+1" data-gapiattached="true"
+                                                src="https://apis.google.com/se/0/_/+1/fastbutton?usegapi=1&amp;count=false&amp;size=small&amp;hl=en-US&amp;origin=https%3A%2F%2Fstore.emotionalpitch.com&amp;url=http%3A%2F%2Fstore.emotionalpitch.com%2Femotional-pitch-1%2F&amp;gsrc=3p&amp;ic=1&amp;jsh=m%3B%2F_%2Fscs%2Fapps-static%2F_%2Fjs%2Fk%3Doz.gapi.en_US.IA14-aHJVYA.O%2Fm%3D__features__%2Fam%3DIQ%2Frt%3Dj%2Fd%3D1%2Ft%3Dzcms%2Frs%3DAGLTcCPcOMIXZ_Y86ART8iEGV6TXje1EGg#_methods=onPlusOne%2C_ready%2C_close%2C_open%2C_resizeMe%2C_renderstart%2Concircled%2Cdrefresh%2Cerefresh&amp;id=I0_1429743274219&amp;parent=https%3A%2F%2Fstore.emotionalpitch.com&amp;pfname=&amp;rpctoken=30770385"
+                                                name="I0_1429743274219" id="I0_1429743274219" vspace="0" tabindex="0"
+                                                style="position: static; top: 0px; width: 24px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 15px;"
+                                                scrolling="no" marginwidth="0" marginheight="0" hspace="0"
+                                                frameborder="0" width="100%"></iframe>
+                                    </div>
+                                </a><a href="#" title="Facebook" class="addthis_button_facebook at300b"><span
+                                    style="background-color: rgb(48, 88, 145);" class="at4-icon aticon-facebook"><span
+                                    class="at_a11y">Share on facebook</span></span></a><a href="#" title="Email"
+                                                                                          target="_blank"
+                                                                                          class="addthis_button_email at300b"><span
+                                    style="background-color: rgb(115, 138, 141);" class="at4-icon aticon-email"><span
+                                    class="at_a11y">Share on email</span></span></a><a href="#" title="Print"
+                                                                                       class="addthis_button_print at300b"><span
+                                    style="background-color: rgb(115, 138, 141);" class="at4-icon aticon-print"><span
+                                    class="at_a11y">Share on print</span></span></a><a href="#" title="Tweet"
+                                                                                       class="addthis_button_twitter at300b"><span
+                                    style="background-color: rgb(44, 168, 210);" class="at4-icon aticon-twitter"><span
+                                    class="at_a11y">Share on twitter</span></span></a>
+
+                                <div class="atclear"></div>
+                            </div>
+                            <script type="text/javascript"
+                                    src="//s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e94ed470ee51e32"></script>
+                            <!-- AddThis Button END -->
+                        </div>
+
+                    </div>
+
+
+                    <div class="clear"></div>
+
+                    <div id="prodAccordion">
+                        <div class="Block Panel ProductDescription current" id="ProductDescription">
+                            <h2 class="subtitle">Product Description</h2>
+
+                            <div style="display: block;" class="ProductDescriptionContainer prodAccordionContent"
+                                 itemprop="description">
+                                <p><span>Whether you are a student, teacher, composer, or play out professionally, Emotional Pitch<sup>®</sup> is your key to reaching the next level of musicianship quickly and easily. With instructional materials that were developed with all levels and types of musicians in mind, this course spotlights the connection between the most basic human emotions and music, and lights the way so you are able to focus on the art—and not the science—of music theory.</span>
+                                </p>
+
+                                <p>The lessons taught in Emotional Pitch<sup>®</sup> start with the essential, core
+                                    ideas of theory. You'll then go on an artistic journey into a world where music and
+                                    emotions unite. Learn what moves audiences to the edge of their seats, why certain
+                                    songs evoke particular emotions inside of you, and how music theory truly does come
+                                    in handy when you want to play or compose what you hear and feel.</p>
+                            </div>
+                            <!--<hr style="" class="ProductSectionSeparator" />-->
+                        </div>
+
+                        <div class="Block Moveable Panel" id="ProductVideos" style="display:none;"></div>
+                        <div class="Block Moveable Panel" id="ProductWarranty" style="display:none;"></div>
+                        <div class="Block Moveable Panel" id="ProductOtherDetails" style="display:none;"></div>
+                        <div class="Block Moveable Panel" id="SimilarProductsByTag" style="display:none;"></div>
+                        <div class="Block Panel" id="ProductReviews">
+                            <h2 class="subtitle">Product Reviews</h2>
+
+                            <div style="display: none;" class="prodAccordionContent">
+                                <a href="#" onclick="show_product_review_form(); return false;" class="btn">Write
+                                    Review</a>
+
+                                <div class="BlockContent">
+
+
+                                    <a id="write_review"></a>
+                                    <script type="text/javascript">
+                                        lang.ReviewNoRating = "Please select a rating.";
+                                        lang.ReviewNoTitle = "Please enter a title for your review.";
+                                        lang.ReviewNoText = "Please enter some text for your review.";
+                                        lang.ReviewNoCaptcha = "Please enter the code shown.";
+                                        lang.ReviewNoEmail = "Please enter your email address.";
+                                        var RecaptchaOptions = {
+                                            theme: 'clean'
+                                        };
+                                    </script>
+                                    <form action="https://store.emotionalpitch.com/postreview.php"
+                                          style="display: none;" method="post" class="ProductReviewForm" id="rating_box"
+                                          onsubmit="return check_product_review_form();">
+                                        <input name="action" value="post_review" type="hidden">
+                                        <input name="product_id" value="76" type="hidden">
+                                        <input name="throttleToken" value="" type="hidden">
+                                        <input name="anchorId" value="ProductReviews" type="hidden">
+                                        <h5>Write Your Own Review</h5>
+
+                                        <div class="FormContainer VerticalFormContainer">
+                                            <dl class="ProductReviewFormContainer">
+                                                <dt>How do you rate this product?</dt>
+                                                <dd>
+                                                    <div id="uniform-revrating" class="selector fixedWidth"><span
+                                                            style="-moz-user-select: none;"> </span><select
+                                                            name="revrating" id="revrating">
+                                                        <option value=""></option>
+                                                        <option value="5">5 stars (best)</option>
+                                                        <option value="4">4 stars</option>
+                                                        <option value="3">3 stars (average)</option>
+                                                        <option value="2">2 stars</option>
+                                                        <option value="1">1 star (worst)</option>
+                                                    </select></div>
+                                                </dd>
+
+                                                <dt>Write a headline for your review here:</dt>
+                                                <dd><input name="revtitle" id="revtitle" class="Textbox" value=""
+                                                           type="text"></dd>
+
+                                                <dt>Write your review here:</dt>
+                                                <dd><textarea name="revtext" id="revtext" rows="8" cols="50"></textarea>
+                                                </dd>
+
+                                                <dt style="display: ">Your email:</dt>
+                                                <dd style="display: ">
+                                                    <input name="email" id="email" class="Textbox"
+                                                           value="studa@stuball.net" type="email">
+
+                                                    <p class="ReviewEmailHint">We promise to never spam you, and just
+                                                        use your email address to identify you as a valid customer.</p>
+                                                </dd>
+
+                                                <dt>Enter your name: (optional)</dt>
+                                                <dd><input name="revfromname" id="revfromname" class="Textbox"
+                                                           value="Stuart D'Alessandro" type="text"></dd>
+
+                                                <dt style="display: ">Enter the code below:</dt>
+                                                <dd style="display: ">
+                                                    <script type="text/javascript"
+                                                            src="https://www.google.com/recaptcha/api/challenge?k=6LdWf8gSAAAAAI83aRectJhbwidegZKk8PzWBltH"></script>
+                                                    <script type="text/javascript"
+                                                            src="https://www.google.com/recaptcha/api/js/recaptcha.js"></script>
+                                                    <div class=" recaptcha_nothad_incorrect_sol recaptcha_isnot_showing_audio"
+                                                         id="recaptcha_widget_div" style="">
+                                                        <div id="recaptcha_area">
+                                                            <table id="recaptcha_table"
+                                                                   class="recaptchatable recaptcha_theme_clean">
+                                                                <tbody>
+                                                                <tr height="73">
+                                                                    <td class="recaptcha_image_cell" width="302">
+                                                                        <center>
+                                                                            <div style="width: 300px; height: 57px;"
+                                                                                 id="recaptcha_image"><img
+                                                                                    id="recaptcha_challenge_image"
+                                                                                    alt="reCAPTCHA challenge image"
+                                                                                    src="https://www.google.com/recaptcha/api/image?c=03AHJ_VusuQVJDtiimJBiRF8vGacjUgFCIMr_vx3L433Z6NSTPX6eensSP2YUBJcViCZOLWQdtgrEr-jIOYEoDS0sWtnNasORiChKSqD7LyuRLaA-Aak5hCqTHQnkiYZmbkMH-xKFx-EcvV2Nl114YfkPfUW04m4Rk7zUVS7QkDQs7Vhwlzrl_EWNtHGOy3Po03lkHYDMQvLrPVfj4rtKz3lZlkABpvOZunEg4gK8FOCN5-U270RwhX_8eggknd5FiM5fmNMjwB7oMdIWeNmaa9_Nijfe0iuZQZg&amp;th=,Sruw5YxNlaERMYK2FsVLKswy3RXwAAAAG6AAAAAE2AC7h6toROrAnS5mskkXH5mCVwitg7DbqRIB56DRqHIHsYmfZ34w1yie-0c1ZlCo4M9yMQ6PJSukudUsm4SoiUHnNRuMnLmlltpDY0qGq9XhaCXhhSiS_QbyxNlR0AED8kK4P9-nIhBYl57JtwtrVXZN8iwj_MUm3cFsXFSveeOFKQRSJ7VmA4w9YmV3tfnqAFT7GTDyjG1QyzxkBehD-tF-8ieef2r_LWkq82uHxeCuWhX75Vg1FT4X9eUfVw"
+                                                                                    height="57" width="300"></div>
+                                                                        </center>
+                                                                    </td>
+                                                                    <td style="padding: 10px 7px 7px 7px;"><a
+                                                                            title="Get a new challenge"
+                                                                            id="recaptcha_reload_btn"><img
+                                                                            src="https://www.google.com/recaptcha/api/img/clean/refresh.png"
+                                                                            id="recaptcha_reload"
+                                                                            alt="Get a new challenge" height="18"
+                                                                            width="25"></a> <a
+                                                                            title="Get an audio challenge"
+                                                                            id="recaptcha_switch_audio_btn"
+                                                                            class="recaptcha_only_if_image"><img
+                                                                            src="https://www.google.com/recaptcha/api/img/clean/audio.png"
+                                                                            id="recaptcha_switch_audio"
+                                                                            alt="Get an audio challenge" height="15"
+                                                                            width="25"></a><a
+                                                                            title="Get a visual challenge"
+                                                                            id="recaptcha_switch_img_btn"
+                                                                            class="recaptcha_only_if_audio"><img
+                                                                            src="https://www.google.com/recaptcha/api/img/clean/text.png"
+                                                                            id="recaptcha_switch_img"
+                                                                            alt="Get a visual challenge" height="15"
+                                                                            width="25"></a> <a title="Help"
+                                                                                               id="recaptcha_whatsthis_btn"><img
+                                                                            alt="Help"
+                                                                            src="https://www.google.com/recaptcha/api/img/clean/help.png"
+                                                                            id="recaptcha_whatsthis" height="16"
+                                                                            width="25"></a></td>
+                                                                    <td style="padding: 18px 7px 18px 7px;"><img
+                                                                            src="https://www.google.com/recaptcha/api/img/clean/logo.png"
+                                                                            id="recaptcha_logo" alt="" height="36"
+                                                                            width="71"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="padding-left: 7px;">
+                                                                        <div class="recaptcha_input_area"
+                                                                             style="padding-top: 2px; padding-bottom: 7px;">
+                                                                            <span style="display: none;"
+                                                                                  id="recaptcha_challenge_field_holder"><input
+                                                                                    name="recaptcha_challenge_field"
+                                                                                    id="recaptcha_challenge_field"
+                                                                                    value="03AHJ_VusuQVJDtiimJBiRF8vGacjUgFCIMr_vx3L433Z6NSTPX6eensSP2YUBJcViCZOLWQdtgrEr-jIOYEoDS0sWtnNasORiChKSqD7LyuRLaA-Aak5hCqTHQnkiYZmbkMH-xKFx-EcvV2Nl114YfkPfUW04m4Rk7zUVS7QkDQs7Vhwlzrl_EWNtHGOy3Po03lkHYDMQvLrPVfj4rtKz3lZlkABpvOZunEg4gK8FOCN5-U270RwhX_8eggknd5FiM5fmNMjwB7oMdIWeNmaa9_Nijfe0iuZQZg"
+                                                                                    type="hidden"></span><input
+                                                                                autocomplete="off"
+                                                                                placeholder="Type the text"
+                                                                                style="border: 1px solid #3c3c3c; width: 302px;"
+                                                                                name="recaptcha_response_field"
+                                                                                id="recaptcha_response_field"
+                                                                                type="text"></div>
+                                                                    </td>
+                                                                    <td colspan="2"><span id="recaptcha_privacy"
+                                                                                          class="recaptcha_only_if_privacy"><a
+                                                                            target="_blank"
+                                                                            href="http://www.google.com/intl/en/policies/">Privacy
+                                                                        &amp; Terms</a></span></td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <noscript>
+                                                        <iframe src="https://www.google.com/recaptcha/api/noscript?k=6LdWf8gSAAAAAI83aRectJhbwidegZKk8PzWBltH"
+                                                                height="300" width="500" frameborder="0"></iframe>
+                        <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+                        </textarea>
+                                                        <input type="hidden" name="recaptcha_response_field"
+                                                               value="manual_challenge">
+                                                    </noscript>
+                                                </dd>
+                                            </dl>
+                                            <p class="Submit">
+                                                <input value="Save My Review" class="btn" type="submit">
+                                            </p>
+                                        </div>
+                                    </form>
+
+                                    <p style="display: ">
+                                        This product hasn't received any reviews yet. Be the first to review this
+                                        product!
+                                    </p>
+
+
+                                    <script type="text/javascript">
+                                        //<![CDATA[
+                                        var HideReviewCaptcha = "";
+
+                                        // Should we automatically open the review form?
+                                        if ("" == "1") {
+                                            show_product_review_form();
+                                        }
+
+                                        if ("" == "1") {
+                                            jump_to_product_reviews();
+                                        }
+                                        //]]>
+                                    </script>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Panel.ProductByCategory -->
+                    </div>
+
+                </div>
+            </div>
+
+            <!--<div class="Block Moveable Panel" id="SimilarProductsByCustomerViews" style="display:none;"></div>-->
+            <!-- <div class="Block Moveable Panel" id="SideProductRelated" style="display:none;"></div> -->
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="inner">
+
+            <div class="newsletter-subscription" id="SideNewsletterBox">
+                <div class="inner">
+                    <div class="grid">
+                        <div class="grid__item one-third">
+
+                            <h4>Sign up for our newsletter</h4>
+                        </div>
+                        <div class="grid__item two-thirds">
+
+                            <form action="https://store.emotionalpitch.com/subscribe.php" method="post"
+                                  id="subscribe_form" class="subscribe_form" name="subscribe_form">
+                                <input name="action" value="subscribe" type="hidden">
+
+                                <div class="grid">
+                                    <div class="grid__item two-fifths">
+                                        <label for="nl_first_name">Name</label>
+                                        <input class="Textbox autobox default" value="Name" id="nl_first_name"
+                                               name="nl_first_name" type="text">
+                                    </div>
+                                    <div class="grid__item two-fifths">
+                                        <label for="nl_email">Email</label>
+                                        <input class="Textbox autobox default" value="Email" id="nl_email"
+                                               name="nl_email" type="email">
+                                    </div>
+                                    <div class="grid__item one-fifth">
+
+                                        <input value="Submit" class="btn" type="submit">
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                // <!--
+                $('#subscribe_form').submit(function () {
+                    if ($('#nl_first_name').val() == '') {
+                        alert('You forgot to type in your first name.');
+                        $('#nl_first_name').focus();
+                        return false;
+                    }
+
+                    if ($('#nl_email').val() == '') {
+                        alert('You forgot to type in your email address.');
+                        $('#nl_email').focus();
+                        return false;
+                    }
+
+                    if ($('#nl_email').val().indexOf('@') == -1 || $('#nl_email').val().indexOf('.') == -1) {
+                        alert('Please enter a valid email address, such as john@example.com.');
+                        $('#nl_email').focus();
+                        $('#nl_email').select();
+                        return false;
+                    }
+
+                    // Set the action of the form to stop spammers
+                    $('#subscribe_form').append("<input type=\"hidden\" name=\"check\" value=\"1\" \/>");
+                    return true;
+
+                });
+                // -->
+            </script>
+
+
+            <div class="footer-main">
+                <div class="inner">
+                    <div class="footer-columns grid">
+                        <div class="grid__item one-third"><h4>Quick Links</h4>
+                            <ul class="pages-menu sf-menu sf-horizontal sf-js-enabled">
+                                <li class=" ">
+                                    <a href="http://store.emotionalpitch.com/contact-us/"><span>Contact Us</span></a>
+
+                                </li>
+                                <li class=" ">
+                                    <a href="http://store.emotionalpitch.com/shipping-returns/"><span>Shipping &amp; Returns</span></a>
+
+                                </li>
+                                <li class=" ">
+                                    <a href="http://store.emotionalpitch.com/blog/"><span>Blog</span></a>
+
+                                </li>
+                                <li class=" ">
+                                    <a href="http://store.emotionalpitch.com/rss-syndication/"><span>RSS Syndication</span></a>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="grid__item one-third"><!--<div class="Block CategoryList Panel">
+    <h4>Categories</h4>
+    <div class="BlockContent">
+        <ul class="sf-menu sf-horizontal">
+<li><a href="http://store.emotionalpitch.com/emotional-pitch/">Emotional Pitch</a></li>
+
+</ul>
+
+    </div>
+</div>--> </div>
+                        <div class="grid__item one-quarter">
+                            <div id="socnet" class="Block SocialConnect Moveable Panel">
+                                <ul>
+                                    <li><a href="https://twitter.com/EmotionalPitch"
+                                           class="icon-social icon-social-theme icon-twitter"
+                                           title="Twitter">Twitter</a></li>
+                                    <li><a href="http://www.youtube.com/BigcommerceDotCom"
+                                           class="icon-social icon-social-theme icon-youtube"
+                                           title="YouTube">YouTube</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <div class="inner">
+                    <p>
+                        <span id="currencyPrices">All prices are in <span title="US Dollar">USD</span>.</span> © 2015
+                        Emotional Pitch. <a href="http://store.emotionalpitch.com/sitemap/"><span>Sitemap</span></a>
+
+                        <span class="powered-by">Powered by <a rel="nofollow" href="http://www.bigcommerce.com">Bigcommerce</a></span>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript"
+            src="https://cdn5.bigcommerce.com/r-1f83c996e2195ae705573eb2731da267d5f444ce/javascript/bc_pinstrumentation.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn5.bigcommerce.com/r-1f83c996e2195ae705573eb2731da267d5f444ce/javascript/superfish/js/jquery.bgiframe.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn5.bigcommerce.com/r-1f83c996e2195ae705573eb2731da267d5f444ce/javascript/superfish/js/superfish.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            if (typeof $.fn.superfish == "function") {
+                $("ul.sf-menu").superfish({
+                    delay: 800,
+                    dropShadows: false,
+                    speed: "fast"
+                })
+                        .find("ul")
+                        .bgIframe();
+            }
+        })
+    </script>
+
+    <script type="text/javascript"
+            src="https://cdn5.bigcommerce.com/r-1f83c996e2195ae705573eb2731da267d5f444ce/javascript/bc_pinterest.min.js"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            if ($('.videoRow').size() > 0) {
+                $('.videoRow').bind('click', function () {
+                    var videoId = $(this).attr('id').replace('video_', '');
+                    $('#FeaturedVideo').html('<object width="398" height="330">'
+                            + '<param name="movie" value="//www.youtube.com/v/' + videoId + '?fs=1"></param>'
+                            + '<param name="allowFullScreen" value="true"></param>'
+                            + '<param name="allowscriptaccess" value="always"></param>'
+                            + '<embed src="//www.youtube.com/v/' + videoId + '?&fs=1&autoplay=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="398" height="330"></embed>'
+                            + '</object>'
+                    );
+                    selectCurrentVideo(videoId);
+                });
+            }
+        });
+    </script>
+</div>
+<div id="_atssh"
+     style="visibility: hidden; height: 1px; width: 1px; position: absolute; top: -9999px; z-index: 100000;">
+    <iframe src="https://s7.addthis.com/static/sh.057ba417.html#iit=1429743273991&amp;tmr=load%3D1429743273782%26core%3D1429743273814%26main%3D1429743273984%26ifr%3D1429743273995&amp;cb=0&amp;cdn=0&amp;kw=&amp;ab=-&amp;dh=store.emotionalpitch.com&amp;dr=https%3A%2F%2Fstore.emotionalpitch.com%2F&amp;du=http%3A%2F%2Fstore.emotionalpitch.com%2Femotional-pitch-1%2F&amp;href=https%3A%2F%2Fstore.emotionalpitch.com%2Femotional-pitch-1%2F&amp;dt=Emotional%20Pitch%C2%AE%20-%20Emotional%20Pitch&amp;dbg=0&amp;cap=tc%3D0%26ab%3D0&amp;inst=1&amp;jsl=1&amp;prod=true&amp;lng=en-US&amp;ogt=availability%2Cimage%2Csite_name%2Curl%2Cdescription%2Ctitle%2Ctype%3Dproduct&amp;pc=men&amp;pub=ra-4e94ed470ee51e32&amp;ssl=1&amp;sid=553826a94f7736d7&amp;srpl=1&amp;srcs=1&amp;srd=1&amp;srf=1&amp;srx=1&amp;ver=300&amp;xck=0&amp;xtr=0&amp;og=type%3Dproduct%26title%3DEmotional%2520Pitch%25C2%25AE%26description%3D%26url%3Dhttp%253A%252F%252Fstore.emotionalpitch.com%252Femotional-pitch-1%252F%26site_name%3DEmotional%2520Pitch%26image%3Dhttps%253A%252F%252Fcdn6.bigcommerce.com%252Fs-xcmumu%252Fproducts%252F76%252Fimages%252F264%252Femotional_pitch_book_cd__01063.1427929186.500.659.jpg%253Fc%253D2%26availability%3Dinstock&amp;aa=0&amp;csi=undefined&amp;toLoJson=uvs%3D5538267d82c34c65001%26chr%3DUTF-8%26md%3D0%26vcl%3D1&amp;rev=v1.4.0-wp&amp;ct=1&amp;xld=1&amp;xd=1"
+            style="height: 1px; width: 1px; position: absolute; top: 0px; z-index: 100000; border: 0px none; left: 0px;"
+            title="AddThis utility frame" id="_atssh808"></iframe>
+</div>
+
+
+<div id="fancy_overlay"></div>
+<div id="fancy_loading">
+    <div></div>
+</div>
+<div id="fancy_outer">
+    <div id="fancy_inner">
+        <div id="fancy_close"></div>
+        <div id="fancy_bg">
+            <div class="fancy_bg" id="fancy_bg_n"></div>
+            <div class="fancy_bg" id="fancy_bg_ne"></div>
+            <div class="fancy_bg" id="fancy_bg_e"></div>
+            <div class="fancy_bg" id="fancy_bg_se"></div>
+            <div class="fancy_bg" id="fancy_bg_s"></div>
+            <div class="fancy_bg" id="fancy_bg_sw"></div>
+            <div class="fancy_bg" id="fancy_bg_w"></div>
+            <div class="fancy_bg" id="fancy_bg_nw"></div>
+        </div>
+        <a href="javascript:;" id="fancy_left"><span class="fancy_ico" id="fancy_left_ico"></span></a><a
+            href="javascript:;" id="fancy_right"><span class="fancy_ico" id="fancy_right_ico"></span></a>
+
+        <div id="fancy_content"></div>
+    </div>
+</div>
+<div id="fancy_title">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+        <tr>
+            <td class="fancy_title" id="fancy_title_left"></td>
+            <td class="fancy_title" id="fancy_title_main">
+                <div></div>
+            </td>
+            <td class="fancy_title" id="fancy_title_right"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<style>@media screen and (max-width: 680px) {
+    #at3win {
+        width: 95%;
+        left: auto;
+        margin-left: auto;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .at4-recommended-horizontal .at4-recommended-item, .at4-recommended-horizontal .at4-recommended-item .at4-recommended-item-img, .at4-recommended-horizontal .at4-recommended-item {
+        width: 240px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .at4win {
+        width: 100%;
+    }
+
+    .addthis_bar .addthis_bar_p {
+        margin-right: auto;
+    }
+}
+
+@media screen and (max-height: 700px) and (max-width: 400px) {
+    .at4-thankyou-inner .at4-recommended-container {
+        height: 122px;
+        overflow: hidden;
+    }
+
+    .at4-thankyou-inner .at4-recommended .at4-recommended-item:first-child {
+        border-bottom: 1px solid #c5c5c5;
+    }
+}
+
+@media print {
+    .at4 {
+        display: none !important;
+    }
+
+    #at4m-mobile {
+        display: none !important;
+    }
+
+    #at4-thankyou {
+        display: none !important;
+    }
+
+    .at4-recommended {
+        display: none !important;
+    }
+
+    #at4-share {
+        display: none !important;
+    }
+
+    #at4-follow {
+        display: none !important;
+    }
+
+    #at4-whatsnext {
+        display: none !important;
+    }
+
+    #at-recommendedside {
+        display: none !important;
+    }
+
+    #at3win {
+        display: none !important;
+    }
+}</style>
+<iframe tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;"
+        src="https://accounts.google.com/o/oauth2/postmessageRelay?parent=https%3A%2F%2Fstore.emotionalpitch.com#rpctoken=570568565&amp;forcesecure=1"
+        id="oauth2relay910924514" name="oauth2relay910924514"></iframe>
+</body></html>
