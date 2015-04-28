@@ -243,4 +243,19 @@ function ToggleShippingEstimation2(){
             $('.EstimateShippingLink').show();
         });
     }
-};
+}
+
+// Replace a text snippet within a certain kind of element (p assumed)
+function ReplaceText(oldText, newText, containerEl) {
+    if (typeof (containerEl) == undefined) {
+        containerEl = 'p';
+    }
+
+    $(containerEl).each(function(){
+        var oldt = $(this).text();
+        var newt = oldt.replace(oldText, newText);
+        if (oldt != newt) {
+            $(this).text(newt);
+        }
+    });
+}
