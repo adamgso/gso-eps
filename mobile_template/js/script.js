@@ -69,16 +69,16 @@ $(function () {
     $(".topNav").addClass("off-screen");
     $("#Container, .nav-area").addClass("on-screen");
 
-    function toggleMenu(e){
+    function toggleMenu(e) {
         if (e.hasClass("off-screen")) {
             e.toggleClass("off-screen").toggleClass("on-screen");
-        }else if (e.hasClass("on-screen")) {
+        } else if (e.hasClass("on-screen")) {
             e.toggleClass("on-screen").toggleClass("off-screen");
         }
         e.toggleClass("animate");
-        setTimeout(function(){
-           e.toggleClass("animate"); 
-        },350);
+        setTimeout(function () {
+            e.toggleClass("animate");
+        }, 350);
     }
 
     $(".showMenu").click(function () {
@@ -110,18 +110,18 @@ $(function () {
     $(".currency-selector").prepend(selectedCurrency).addClass("closed");
     $(".currency-selector.closed").siblings(".CurrencyList").hide();
 
-    $(".currency-selector").click(function(){
+    $(".currency-selector").click(function () {
         $(this).toggleClass("closed");
         toggleChevron(".more-icon");
         if ($(this).siblings(".CurrencyList").is(":visible")) {
             $(this).siblings(".CurrencyList").hide();
         } else {
-            $(this).siblings(".CurrencyList").show(0,function(){
+            $(this).siblings(".CurrencyList").show(0, function () {
                 $(".topNav").scrollTop($(".topNav")[0].scrollHeight);
             });
         }
     });
-    
+
 
     $(".show-newsletter").click(function () {
         if ($(this).siblings("#SideNewsletterBox").is(":visible")) {
@@ -151,8 +151,8 @@ $(function () {
                 n = n || "...";
                 var r = n.length,
                     i = t - r,
-                    s = Math.ceil(i / 2),
-                    o = Math.floor(i / 2);
+                    s = Math.ceil(i/2),
+                    o = Math.floor(i/2);
                 return e.substr(0, s) + n + e.substr(e.length - o);
             };
             $(this).children("strong").children("a").text(e($(this).children("strong").children("a").text(), 50));
@@ -227,22 +227,23 @@ $(function () {
     });
 
     /*
-        This block of code removes active state from links if the user moves the screen
-        It does it by detaching the active link from the dom, then retaching it, which seems to remove the active state from the element.
-    */
-    (function(){
+     This block of code removes active state from links if the user moves the screen
+     It does it by detaching the active link from the dom, then retaching it, which seems to remove the active state from the element.
+     */
+    (function () {
         /*
-        Throttle and debounce lifted from lodash.
-        TODO: remove these if we ever include a library to do these things (underscore or lodash)
-        */
+         Throttle and debounce lifted from lodash.
+         TODO: remove these if we ever include a library to do these things (underscore or lodash)
+         */
         var debounceOptions = {
             'leading': false,
             'maxWait': 0,
             'trailing': false
         };
-        var now = function() {
+        var now = function () {
             return new Date().getTime();
         };
+
         function throttle(func, wait, options) {
             var leading = true,
                 trailing = true;
@@ -281,7 +282,7 @@ $(function () {
                 maxWait = 'maxWait' in options && (Math.max(wait, options.maxWait) || 0);
                 trailing = 'trailing' in options ? options.trailing : trailing;
             }
-            var delayed = function() {
+            var delayed = function () {
                 var remaining = wait - (now() - stamp);
                 if (remaining <= 0) {
                     if (maxTimeoutId) {
@@ -301,7 +302,7 @@ $(function () {
                 }
             };
 
-            var maxDelayed = function() {
+            var maxDelayed = function () {
                 if (timeoutId) {
                     clearTimeout(timeoutId);
                 }
@@ -315,7 +316,7 @@ $(function () {
                 }
             };
 
-            return function() {
+            return function () {
                 args = arguments;
                 stamp = now();
                 thisArg = this;
@@ -328,7 +329,7 @@ $(function () {
                         lastCalled = stamp;
                     }
                     var remaining = maxWait - (stamp - lastCalled),
-                            isCalled = remaining <= 0;
+                        isCalled = remaining <= 0;
 
                     if (isCalled) {
                         if (maxTimeoutId) {
@@ -362,14 +363,15 @@ $(function () {
             var type = typeof value;
             return value && (type == 'function' || type == 'object') || false;
         }
+
         /* End throttle/debounce */
         var pointerEventsDisabled = false;
-        var reset = debounce(function(){
+        var reset = debounce(function () {
             pointerEventsDisabled = false;
         }, 250);
-        $(window).bind('touchmove', throttle(function(e){
-            if(!pointerEventsDisabled){
-                $("a:active").each(function(){
+        $(window).bind('touchmove', throttle(function (e) {
+            if (!pointerEventsDisabled) {
+                $("a:active").each(function () {
                     var nextSibling = this.nextSibling,
                         parent = this.parentNode;
                     parent.removeChild(this);
@@ -406,13 +408,13 @@ $(function () {
     searchForm.show();
 
     // ============ Footer Accordion ============
-    $(".accordion-btn").attr("href","#").children(".more-icon").addClass("icon-chevron-down")
-    $(".accordion-btn").click(function(){
+    $(".accordion-btn").attr("href", "#").children(".more-icon").addClass("icon-chevron-down")
+    $(".accordion-btn").click(function () {
         var accordionBtn = $(this);
         accordionBtn.siblings("ul").toggleClass("show").slideToggle({
-                duration: 400,
-                easing: "easeInSine"
-            });
+            duration: 400,
+            easing: "easeInSine"
+        });
         accordionBtn.toggleClass("open");
         toggleChevron(".more-icon");
         return false;
@@ -422,7 +424,7 @@ $(function () {
     // Use this to toggle any chevron to its opposite - handy for accordions or menus
     function toggleChevron(icon) {
         var chevron = $(icon);
-        switch(true) {
+        switch (true) {
             case (chevron.hasClass("icon-chevron-down")):
                 chevron.removeClass("icon-chevron-down").addClass("icon-chevron-up");
                 break;
@@ -437,24 +439,25 @@ $(function () {
                 break;
         }
     }
+
     // ============ Blog recent posts accordion ============
-    (function(){
-        $('#BlogRecentPosts').each(function(){
+    (function () {
+        $('#BlogRecentPosts').each(function () {
             var parent = $(this),
                 toggler = $('> h3 a', this),
                 content = $('> .BlockContent', parent),
                 isOpen = false;
 
             content.hide();
-            toggler.click(function(e){
+            toggler.click(function (e) {
                 e.preventDefault();
-                if(isOpen){
+                if (isOpen) {
                     isOpen = false;
                     content.stop().slideUp({
                         duration: 400,
                         easing: "easeInSine"
                     });
-                } else{
+                } else {
                     isOpen = true;
                     content.stop().slideDown({
                         duration: 400,
@@ -473,47 +476,49 @@ $(function () {
         });
     }());
     /*global jQuery */
-/*!
-* FitText.js 1.1
-*
-* Copyright 2011, Dave Rupert http://daverupert.com
-* Released under the WTFPL license
-* http://sam.zoy.org/wtfpl/
-*
-* Date: Thu May 05 14:23:00 2011 -0600
-*/
+    /*!
+     * FitText.js 1.1
+     *
+     * Copyright 2011, Dave Rupert http://daverupert.com
+     * Released under the WTFPL license
+     * http://sam.zoy.org/wtfpl/
+     *
+     * Date: Thu May 05 14:23:00 2011 -0600
+     */
 // Modified and added by Miko Ademagic
 
-  $.fn.fitText = function( k, o ) {
+    $.fn.fitText = function (k, o) {
 
-    // Setup options
-    var compressor = k || 1,
-        settings = $.extend({
-          'minFontSize' : Number.NEGATIVE_INFINITY,
-          'maxFontSize' : Number.POSITIVE_INFINITY
-        }, o);
+        // Setup options
+        var compressor = k || 1,
+            settings = $.extend({
+                'minFontSize': Number.NEGATIVE_INFINITY,
+                'maxFontSize': Number.POSITIVE_INFINITY
+            }, o);
 
-    return this.each(function(){
+        return this.each(function () {
 
-          // Store the object
-          var $this = $(this);
+            // Store the object
+            var $this = $(this);
 
-          // Resizer() resizes items based on the object width divided by the compressor * 10
-          var resizer = function () {
-            var sl = $this.children('h1').text().length;
-            $this.css('font-size', Math.max(Math.min(($this.width() / sl) * compressor, parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
-          };
+            // Resizer() resizes items based on the object width divided by the compressor * 10
+            var resizer = function () {
+                var sl = $this.children('h1').text().length;
+                $this.css('font-size', Math.max(Math.min(($this.width()/sl)*compressor, parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
+            };
 
-          // Call once to set.
-          resizer();
+            // Call once to set.
+            resizer();
 
-          // Call on resize. Opera debounces their resize by default.
-         $(window).bind('resize.fittext orientationchange.fittext', resizer);
+            // Call on resize. Opera debounces their resize by default.
+            $(window).bind('resize.fittext orientationchange.fittext', resizer);
 
-    });
+        });
 
-  };
+    };
 
-  $('#LogoContainer').fitText(1.6, { minFontSize: '14px', maxFontSize: '20px' });
+    $('#LogoContainer').fitText(1.6, {minFontSize: '14px', maxFontSize: '20px'});
 
+    /* Custom emotional pitch scripts */
+    $('div#Logo a').attr('href', 'http://www.emotionalpitch.com');
 });

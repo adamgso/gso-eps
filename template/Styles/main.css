@@ -166,6 +166,12 @@ div#page div.content-block ul {
 div#page footer {
     margin-top: 30px;
 }
+div#page div.footer a {
+    color: #ffffff;
+}
+div#page div.footer a:hover {
+    color: #333333;
+}
 div#page div.banner {
     margin-bottom: 20px;
 }
